@@ -1,0 +1,56 @@
+Let's install required packages:
+
+sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
+
+To Start and Enable Libvrt run these commands:
+
+sudo adduser yourusername libvirt
+
+sudo adduser yourusername kvm
+
+sudo systemctl start libvirtd
+
+sudo systemctl enable libvirtd
+
+sudo systemctl status libvirtd
+
+Open this file and uncomment these 2 Lines below by removing pound sign in front of line:
+
+sudo nano /etc/libvirt/libvirtd.conf
+
+uncomment 
+
+unix_sock_group = 'libvirt'
+
+unix_sock_rw_perms = '0770'
+
+You need to add your user name to qemu and uncomment to the linue user= and group= so run this in terminal:
+
+sudo nano /etc/libvirt/qemu.conf
+
+# Some examples of valid values are:
+#
+#       user = "qemu"   # A user named "qemu"
+#       user = "+0"     # Super user (uid=0)
+#       user = "100"    # A user named "100" or a user with uid=100
+#
+user = "your user name"
+
+# The group for QEMU processes run by the system instance. It can be
+# specified in a similar way to user.
+group = "your user name"
+
+If you start virtual machine and guest OS as no internet connection run this command and uncomment firewall_backend line and change nftables to iptables and save file:
+
+sudo nano /etc/libvirt/network.conf   
+
+firewall_backend = "iptables"   
+
+Restart libvirt:
+
+sudo systemctl restart libvirtd   
+
+Link to my video if needed:
+https://youtu.be/BIUzeUJCmzs
+
+Enjoy
